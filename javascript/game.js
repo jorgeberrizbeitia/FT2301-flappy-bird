@@ -11,6 +11,9 @@ class Game {
     // this.tuboTest = new Tubo()
 
     this.tubosArr = [];
+    this.frames = 1; // determina la cantidad de frames que han pasado en el juego
+
+    this.tuboSeparation = 300;
 
     
     
@@ -36,9 +39,25 @@ class Game {
 
   // que los tubos aparezcan y desaparezcan
   tubosAparecen = () => {
-    let tuboParaAñadir = new Tubo()
-    this.tubosArr.push(tuboParaAñadir)
     // no siempre se agregaran sino que estará condicionado
+    
+    // si el array está vacio, agrega un tubo
+    // o si ha pasado un tiempo especifico (2 seg) (this.frames % 120 === 0) agrega un tubo
+    if (this.tubosArr.length === 0 || this.frames % 120 === 0) {
+
+      let randomPosY = Math.random() * (-100) // => 0 y -50
+
+      let tuboDeArriba = new Tubo(randomPosY, true) // => posY 0
+      this.tubosArr.push(tuboDeArriba)
+
+
+      let tuboDeAbajo = new Tubo(tuboDeArriba.y + this.tuboSeparation, false) // => posY 400
+      this.tubosArr.push(tuboDeAbajo)
+      console.log(this.tubosArr.length)
+    }
+
+    // al final de clase tomar en cuenta los tubes que salen y sacarlos del array
+
   } 
 
   drawBg = () => {
@@ -51,7 +70,9 @@ class Game {
 
 
   gameLoop = () => {
-    // console.log("recursion andando")
+    // console.log("recursion andando") // 60 veces por segundo
+    // console.log(this.frames)
+    this.frames++
 
     // 1. limpiar el canvas
     this.clearCanvas()

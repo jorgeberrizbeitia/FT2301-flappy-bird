@@ -1,14 +1,18 @@
 class Tubo {
 
   // propiedades de los tubos
-  constructor() {
-    this.x = canvas.width - 200;
-    this.y = 0;
+  constructor(yPos, isTuboImageUp) {
+    this.x = canvas.width;
+    this.y = yPos; // deberia cambiar dependiendo del tipo de tubo
     this.w = 50;
     this.h = 200;
     this.speed = 2;
     this.image = new Image()
-    this.image.src = "./images/obstacle_top.png";
+    if (isTuboImageUp === true) {
+      this.image.src = "./images/obstacle_top.png";
+    } else {
+      this.image.src = "./images/obstacle_bottom.png";
+    }
   }
 
 

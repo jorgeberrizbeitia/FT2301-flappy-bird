@@ -19,6 +19,8 @@ const startGame = () => {
   game = new Game() // acceder a la variable global y crear un nuevo juego en ella
   console.log(game)
 
+  
+
   // 3. iniciar el juego (el game loop)
   game.gameLoop()
 
