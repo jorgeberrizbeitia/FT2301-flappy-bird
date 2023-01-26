@@ -8,16 +8,16 @@ class Game {
 
     this.pollito = new Pollito()
     // console.log(this.pollito)
-    this.tubos;
+    // this.tuboTest = new Tubo()
+
+    this.tubosArr = [];
 
     
-    // que los tubos avances
-    // propiedades de los tubos
-    // que los tubos aparezcan y desaparezcan
+    
+    
     
     // colisiones pollito con los tubos
     // collision con el suelo
-    
     // gameOver => enviar a la pantalla final
     // boton de pausa
     
@@ -32,6 +32,14 @@ class Game {
 
 
   // metodos
+
+
+  // que los tubos aparezcan y desaparezcan
+  tubosAparecen = () => {
+    let tuboParaAñadir = new Tubo()
+    this.tubosArr.push(tuboParaAñadir)
+    // no siempre se agregaran sino que estará condicionado
+  } 
 
   drawBg = () => {
     ctx.drawImage(this.bg, 0, 0, canvas.width, canvas.height)
@@ -50,10 +58,22 @@ class Game {
 
     // 2. movimientos y acciones de todos los elementos
     this.pollito.gravityPollito()
+    // this.tuboTest.moveTubo()
+    this.tubosAparecen()
+    // quiero mover todos los tubos del array
+    this.tubosArr.forEach((eachTubo) => {
+      eachTubo.moveTubo()
+    })
+
 
     // 3. dibujado de los elementos
     this.drawBg()
     this.pollito.drawPollito()
+    // this.tuboTest.drawTubo()
+    // quiero dibujar todos los tubos del array
+    this.tubosArr.forEach((eachTubo) => {
+      eachTubo.drawTubo()
+    })
 
     // 4. recursion y control
     requestAnimationFrame(this.gameLoop)
