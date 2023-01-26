@@ -4,18 +4,20 @@ class Game {
   constructor() {
     this.bg = new Image();
     this.bg.src = "./images/bg.png"
+    // nota importante. TODOS LOS ACCESOS de src desde clases deberian empezar con "./"
 
-    this.pollito;
+    this.pollito = new Pollito()
+    // console.log(this.pollito)
     this.tubos;
 
+    
     // que los tubos avances
-    // que el pollita baje => gravedad
-    // que el pollito suba
     // propiedades de los tubos
-    // propiedades del pollito
+    // que los tubos aparezcan y desaparezcan
+    
     // colisiones pollito con los tubos
     // collision con el suelo
-    // que los tubos aparezcan y desaparezcan
+    
     // gameOver => enviar a la pantalla final
     // boton de pausa
     
@@ -31,18 +33,27 @@ class Game {
 
   // metodos
 
+  drawBg = () => {
+    ctx.drawImage(this.bg, 0, 0, canvas.width, canvas.height)
+  }
+
+  clearCanvas = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+  }
+
 
   gameLoop = () => {
-    console.log("recursion andando")
+    // console.log("recursion andando")
 
     // 1. limpiar el canvas
-
+    this.clearCanvas()
 
     // 2. movimientos y acciones de todos los elementos
-
+    this.pollito.gravityPollito()
 
     // 3. dibujado de los elementos
-    ctx.drawImage(this.bg, 0, 0, canvas.width, canvas.height)
+    this.drawBg()
+    this.pollito.drawPollito()
 
     // 4. recursion y control
     requestAnimationFrame(this.gameLoop)
