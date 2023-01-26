@@ -13,16 +13,16 @@ class Game {
     this.tubosArr = [];
     this.frames = 1; // determina la cantidad de frames que han pasado en el juego
 
-    this.tuboSeparation = 300;
+    this.tuboSeparation = 350;
+    this.isGameOn = true;
 
     
     
     
     
-    // colisiones pollito con los tubos
-    // collision con el suelo
-    // gameOver => enviar a la pantalla final
-    // boton de pausa
+
+
+
     
     // BONUS
     // puntuacion 
@@ -36,6 +36,50 @@ class Game {
 
   // metodos
 
+  // collision con el suelo
+  checkColisionPollitoSuelo = () => {
+    if (this.pollito.y + this.pollito.h > canvas.height || this.pollito.y + this.pollito.h < 0) {
+      this.gameOver()
+    }
+  }
+
+
+  // gameOver => enviar a la pantalla final
+  gameOver = () => {
+    // 1. IMPORTANTE! detener la recursion
+    this.isGameOn = false;
+
+    // 2. ocultar el canvas
+    canvas.style.display = "none";
+
+    // 3. mostrar la pantalla final
+    gameoverScreenDOM.style.display = "flex";
+
+  }
+
+  // colisiones pollito con los tubos
+  checkColisionPollitoTubo = () => {
+
+    // el pollito
+    // cada uno de los tubos del array
+    this.tubosArr.forEach((eachTubo) => {
+      // compara si cada tubo colisiona con el pollito
+      // eachTubo
+      // this.pollito
+      if (
+        eachTubo.x < this.pollito.x + this.pollito.w &&
+        eachTubo.x + eachTubo.w > this.pollito.x &&
+        eachTubo.y < this.pollito.y + this.pollito.h &&
+        eachTubo.h + eachTubo.y > this.pollito.y
+      ) {
+        // Collision detected!
+        console.log("pollito ha colisionado")
+        // activar el fin del juego
+        this.gameOver()
+      } 
+    })
+
+  }
 
   // que los tubos aparezcan y desaparezcan
   tubosAparecen = () => {
@@ -59,6 +103,13 @@ class Game {
     // al final de clase tomar en cuenta los tubes que salen y sacarlos del array
 
   } 
+
+  // limpiaza de tubos del array
+  removeTubes = () => {
+    if (this.tubosArr[0].x + this.tubosArr[0].w < 0) {
+      this.tubosArr.shift()
+    }
+  }
 
   drawBg = () => {
     ctx.drawImage(this.bg, 0, 0, canvas.width, canvas.height)
@@ -85,6 +136,9 @@ class Game {
     this.tubosArr.forEach((eachTubo) => {
       eachTubo.moveTubo()
     })
+    this.checkColisionPollitoTubo()
+    this.checkColisionPollitoSuelo()
+    this.removeTubes()
 
 
     // 3. dibujado de los elementos
@@ -97,7 +151,9 @@ class Game {
     })
 
     // 4. recursion y control
-    requestAnimationFrame(this.gameLoop)
+    if (this.isGameOn === true) {
+      requestAnimationFrame(this.gameLoop)
+    }
 
   }
 

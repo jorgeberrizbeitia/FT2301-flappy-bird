@@ -2,6 +2,8 @@
 const startBtnDOM = document.querySelector("#start-btn")
 const canvas = document.querySelector("#my-canvas")
 const startScreenDOM = document.querySelector("#splash-screen")
+const gameoverScreenDOM = document.querySelector("#gameover-screen")
+const pauseBtnDOM = document.querySelector("#pause-btn")
 const ctx = canvas.getContext("2d")
 let game; // el obj del juego sea accesible en todo el codigo
 
@@ -19,7 +21,7 @@ const startGame = () => {
   game = new Game() // acceder a la variable global y crear un nuevo juego en ella
   console.log(game)
 
-  
+
 
   // 3. iniciar el juego (el game loop)
   game.gameLoop()
@@ -39,6 +41,18 @@ const handleJumpPollito = (event) => {
 // * ADD EVENT LISTENERS
 startBtnDOM.addEventListener("click", startGame)
 window.addEventListener("keydown", handleJumpPollito)
+
+pauseBtnDOM.addEventListener("click", () => {
+  // hacer pausar el juego
+  console.log("haciendo pause")
+  if (game.isGameOn === true) {
+    game.isGameOn = false
+  } else {
+    game.isGameOn = true
+    game.gameLoop() // volver a iniciar la recursion
+  }
+
+})
 
 
 
